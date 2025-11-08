@@ -2,9 +2,6 @@ import java.util.*;
 
 public class SchedulerSimulation {
 
-    /**
-     * Represents a fraud alert interval with urgency and severity.
-     */
     static class FraudAlert {
         private final String id;
         private final int start, end;
@@ -31,7 +28,6 @@ public class SchedulerSimulation {
             return end;
         }
 
-        /** Weight is urgency * severity */
         public double getWeight() {
             return urgency * severity;
         }
@@ -98,13 +94,6 @@ public class SchedulerSimulation {
         }
     }
 
-    /**
-     * An investigation team with skill factor, fatigue, and assigned alerts.
-     *
-     * Skill factor models expertise scaling alert weights.
-     * Fatigue models workload reducing team effectiveness.
-     * Conflict penalties reduce assignment scores for scheduling decisions.
-     */
     static class InvestigationTeam {
         private final String name;
         private final double skillFactor;
@@ -158,10 +147,6 @@ public class SchedulerSimulation {
             this.teams = teams;
         }
 
-        /**
-         * Formal running time: O(n log n + n m log k)
-         * Greedy correctness: Assigns max weighted intervals without conflict per team, optimal for interval scheduling extension.
-         */
         public void schedule() {
             alerts.sort(Comparator.comparingDouble(FraudAlert::getWeight).reversed());
             for (FraudAlert a : alerts) {
@@ -186,7 +171,6 @@ public class SchedulerSimulation {
     }
 
     public static void main(String[] args) {
-        // Timing experiment output (for graphing externally)
         System.out.println("=== Greedy Algorithm Scheduling Timing Experiment ===");
         System.out.println("Size,Runtime_ms");
         int[] sizes = {100, 500, 1000, 2000, 5000};
@@ -201,8 +185,6 @@ public class SchedulerSimulation {
             long end = System.nanoTime();
             System.out.printf("%d,%.3f%n", size, (end - start) / 1e6);
         }
-
-        // Run all desired test cases with neat output
         System.out.println("\n=== Demo: Large Random Test ===");
         runTest(generateRandomAlerts(1000));
 
@@ -286,3 +268,4 @@ public class SchedulerSimulation {
         return alerts;
     }
 }
+
