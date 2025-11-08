@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class BankAlgorithmsMain {
-    // ====== GREEDY ALERT SCHEDULING ======
     static class Interval {
         int start, end;
         Interval(int s, int e) { this.start = s; this.end = e; }
@@ -18,7 +17,6 @@ public class BankAlgorithmsMain {
         return count;
     }
 
-    // ====== DIVIDE-AND-CONQUER TRANSACTION MERGE ======
     static class Transaction implements Comparable<Transaction> {
         int timestamp, priority, branchId, txnId;
         String priorityLabel;
@@ -75,7 +73,6 @@ public class BankAlgorithmsMain {
         int k = 8, txnsPerBranch = 2000;
         String[] priorities = {"Low", "Medium", "High"};
 
-        // ==== Simulated Test: Transaction Merge (Divide & Conquer) ====
         List<List<Transaction>> logs = new ArrayList<>();
         for (int b=0; b<k; b++) {
             List<Transaction> branchLog = new ArrayList<>();
@@ -85,7 +82,7 @@ public class BankAlgorithmsMain {
                 String p = priorities[rand.nextInt(3)];
                 branchLog.add(new Transaction(t, p, b, i));
             }
-            branchLog.sort(Comparator.naturalOrder()); // CRITICAL FIX!!
+            branchLog.sort(Comparator.naturalOrder());
             logs.add(branchLog);
         }
         long start = System.currentTimeMillis();
@@ -96,7 +93,6 @@ public class BankAlgorithmsMain {
         System.out.printf("%-38s %d\n", "Runtime (ms):", (end-start));
         System.out.println("Validation: " + (validate(root.data) ? "PASS" : "FAIL"));
 
-        // ==== Edge Case: Duplicate Timestamps, Priorities ====
         List<List<Transaction>> logs2 = new ArrayList<>();
         logs2.add(Arrays.asList(
             new Transaction(10, "High", 0, 1),
@@ -113,7 +109,6 @@ public class BankAlgorithmsMain {
         for (Transaction t : advMerge.data) System.out.println(t);
         System.out.println("Validation: " + (validate(advMerge.data) ? "PASS" : "FAIL"));
 
-        // ==== Edge Case: Empty Branch Logs ====
         List<List<Transaction>> logs3 = new ArrayList<>();
         logs3.add(Arrays.asList());
         logs3.add(Arrays.asList());
@@ -124,7 +119,6 @@ public class BankAlgorithmsMain {
         for (Transaction t : empMerge.data) System.out.println(t);
         System.out.println("Validation: " + (validate(empMerge.data) ? "PASS" : "FAIL"));
 
-        // ==== Stress Test: Same Priority, Large N ====
         int bigN = 16000; List<List<Transaction>> lsts = new ArrayList<>();
         for (int b = 0; b < 8; b++) {
             List<Transaction> L = new ArrayList<>();
@@ -143,7 +137,6 @@ public class BankAlgorithmsMain {
         System.out.printf("%-38s %d\n", "Runtime (ms):", (endStress-startStress));
         System.out.println("Validation: " + (validate(bigTest.data) ? "PASS" : "FAIL"));
 
-        // ==== Example Test: Transaction Merge ====
         System.out.println("\n50E Example Test: Transaction Merge");
         List<Transaction> branch0 = Arrays.asList(
             new Transaction(1, "High", 0, 1),
@@ -162,3 +155,4 @@ public class BankAlgorithmsMain {
         for (Transaction t : exampleMerge.data) System.out.println(t);
     }
 }
+
